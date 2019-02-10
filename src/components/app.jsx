@@ -1,5 +1,7 @@
 import React from 'react';
 import TodoList from './todo_list';
+import CreateTodo from './create_todo';
+import _ from 'lodash';
 
 const todos = [
   {
@@ -8,7 +10,7 @@ const todos = [
   },
   {
     task: "eat dinner",
-    isCompleted: true
+    isCompleted: false
   }
 ]
 
@@ -19,13 +21,39 @@ export default class App extends React.Component {
     this.state = {
       todos
     };
+    this.createTodo = this.createTodo.bind(this);
+    this.toggleTask = this.toggleTask.bind(this);
+  }
+
+  createTodo(task) {
+    const { todos } = this.state;
+    todos.push({
+      task,
+      isCompleted: false
+    });
+    this.setState({
+      todos
+    });
+  }
+
+  toggleTask(task) {
+    //find the todo in the array
+    const foundTodo = _.find(this.state.todos, todo => todo.task === task);
+    //change the isCompleted to the opposite of what it is
+    foundTodo.isCompleted = !foundTodo.isCompleted;
+    console.log(foundTodo);
+    // console.log(this.state.todos);
+    this.setState = ({
+      todos: this.state.todos
+    });
   }
 
   render() {
     return (
       <div>
         <h1>React ToDo App</h1>
-        <TodoList todos={this.state.todos} />
+        <CreateTodo createTodo={this.createTodo} />
+        <TodoList todos={this.state.todos} toggleTask={this.toggleTask} />
       </div>
     )
   }
