@@ -13,23 +13,6 @@ export default class TodoListItem extends React.Component {
     this.onDeleteClick = this.onDeleteClick.bind(this);
   }
 
-  onEditClick() {
-    console.log(this.props);
-    this.setState({ isEditing: true });
-  }
-
-  onCancelClick() {
-    this.setState({ isEditing: false });
-  }
-
-  onSaveClick() {
-    this.setState({ isEditing: false });
-  }
-
-  onDeleteClick() {
-
-  }
-
   renderActionSection() {
     if (this.state.isEditing) {
       return (
@@ -55,9 +38,18 @@ export default class TodoListItem extends React.Component {
       color: isCompleted ? 'green' : 'red',
       cursor: 'pointer'
     }
-
     const wrappedToggleTask = () => {
       toggleTask(task);
+    }
+
+    if (this.state.isEditing) {
+      return (
+        <td>
+          <form onSubmit={this.onSaveClick}>
+            <input type="text" defaultValue={task} ref="editInput" />
+          </form>
+        </td>
+      )
     }
 
     return (
@@ -65,7 +57,6 @@ export default class TodoListItem extends React.Component {
         {task}
       </td>
     )
-
   }
 
   render() {
@@ -76,4 +67,26 @@ export default class TodoListItem extends React.Component {
       </tr>
     )
   }
+
+  onEditClick() {
+    this.setState({ isEditing: true });
+  }
+
+  onCancelClick() {
+    this.setState({ isEditing: false });
+  }
+
+  onSaveClick() {
+    const { task, saveTask } = this.props;
+    this.setState({ isEditing: false });
+    const newTask = this.refs.editInput.value;
+    saveTask(task, newTask);
+  }
+
+  onDeleteClick() {
+    const { task, deleteTask } = this.props;
+    deleteTask(task);
+  }
+
 }
+

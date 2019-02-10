@@ -23,6 +23,8 @@ export default class App extends React.Component {
     };
     this.createTodo = this.createTodo.bind(this);
     this.toggleTask = this.toggleTask.bind(this);
+    this.saveTask = this.saveTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   createTodo(task) {
@@ -38,13 +40,48 @@ export default class App extends React.Component {
 
   toggleTask(task) {
     //find the todo in the array
-    const foundTodo = _.find(this.state.todos, todo => todo.task === task);
-    //change the isCompleted to the opposite of what it is
-    foundTodo.isCompleted = !foundTodo.isCompleted;
-    console.log(foundTodo);
-    // console.log(this.state.todos);
-    this.setState = ({
-      todos: this.state.todos
+    // const foundTodo = _.find(this.state.todos, todo => todo.task === task);
+    // //change the isCompleted to the opposite of what it is
+    // foundTodo.isCompleted = !foundTodo.isCompleted;
+
+    const newList = this.state.todos.map(todo => {
+      if (todo.task === task) {
+        return {
+          task,
+          isCompleted: !todo.isCompleted
+        };
+      }
+      return todo;
+    });
+    this.setState({
+      todos: newList
+    });
+  }
+
+  saveTask(oldTask, newTask) {
+    const newList = this.state.todos.map(todo => {
+      if (todo.task === oldTask) {
+        return {
+          task: newTask,
+          isCompleted: false
+        };
+      }
+      return todo;
+    });
+    this.setState({
+      todos: newList
+    });
+  }
+
+  deleteTask(task) {
+    const newList = this.state.todos.map(todo => {
+      if (todo.task === task) {
+        return null;
+      }
+      return todo;
+    });
+    this.setState({
+      todos: newList
     });
   }
 
@@ -53,7 +90,12 @@ export default class App extends React.Component {
       <div>
         <h1>React ToDo App</h1>
         <CreateTodo createTodo={this.createTodo} />
-        <TodoList todos={this.state.todos} toggleTask={this.toggleTask} />
+        <TodoList
+          todos={this.state.todos}
+          toggleTask={this.toggleTask}
+          saveTask={this.saveTask}
+          deleteTask={this.deleteTask}
+        />
       </div>
     )
   }
