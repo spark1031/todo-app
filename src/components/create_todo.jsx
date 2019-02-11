@@ -15,9 +15,9 @@ export default class CreateTodo extends React.Component {
   render() {
     //by invoking handleCreate and using ES6 syntax, you don't need to bind! If you do not invoke handleCreate, you need to bind
     return (
-      <form onSubmit={this.handleCreate()}>
-        <input type="text" placeholder="What do I need to do?" ref="createInput" />
-        <button>Create</button>
+      <form className="create-form" onSubmit={this.handleCreate()}>
+        <input className="create-input" type="text" placeholder="Enter task" ref="createInput" />
+        <button className="create-button">CREATE</button>
       </form>
     )
   }

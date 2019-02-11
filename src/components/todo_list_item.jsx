@@ -16,17 +16,17 @@ export default class TodoListItem extends React.Component {
   renderActionSection() {
     if (this.state.isEditing) {
       return (
-        <td>
-          <button onClick={this.onSaveClick}>Save</button>
-          <button onClick={this.onCancelClick}>Cancel</button>
+        <td className="todo-action-buttons">
+          <button onClick={this.onSaveClick}>SAVE</button>
+          <button onClick={this.onCancelClick}>CANCEL</button>
         </td>
       )
     }
 
     return (
-      <td>
-        <button onClick={this.onEditClick}>Edit</button>
-        <button onClick={this.onDeleteClick}>Delete</button>
+      <td className="todo-action-buttons">
+        <button onClick={this.onEditClick}>EDIT</button>
+        <button onClick={this.onDeleteClick}>DELETE</button>
       </td>
     )
   }
@@ -44,7 +44,7 @@ export default class TodoListItem extends React.Component {
 
     if (this.state.isEditing) {
       return (
-        <td>
+        <td >
           <form onSubmit={this.onSaveClick}>
             <input type="text" defaultValue={task} ref="editInput" />
           </form>
@@ -53,7 +53,7 @@ export default class TodoListItem extends React.Component {
     }
 
     return (
-      <td style={taskStyle} onClick={wrappedToggleTask}>
+      <td className="todo-item" style={taskStyle} onClick={wrappedToggleTask}>
         {task}
       </td>
     )

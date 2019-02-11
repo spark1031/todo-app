@@ -80,15 +80,16 @@ export default class App extends React.Component {
       }
       return todo;
     });
+    const compactedList = _.compact(newList);
     this.setState({
-      todos: newList
+      todos: compactedList
     });
   }
 
   render() {
     return (
-      <div>
-        <h1>React ToDo App</h1>
+      <div className="app-wrapper">
+        <div className="app-header">React ToDo App</div>
         <CreateTodo createTodo={this.createTodo} />
         <TodoList
           todos={this.state.todos}
